@@ -1,4 +1,6 @@
 # Reference: https://github.com/alacritty/alacritty/blob/master/alacritty.yml
+
+live_config_reload: true
 env:
   TERM: xterm-256color
 
@@ -10,7 +12,6 @@ font:
     family: FuraMono Nerd Font
     style: Bold
   size: 16.0
-  AppleFontSmooting: true
 
 window:
   opacity: 0.9
@@ -43,4 +44,9 @@ colors:
     cyan:    '0x56b6c2'
     white:   '0x828791'
 
-live_config_reload: true
+key_bindings:
+  - { key: J,    mods: Alt, chars: "\x1bj" }
+  - { key: K,    mods: Alt, chars: "\x1bk" }
+  - { key: Key1, mods: Alt, chars: "\x1b1" }
+  - { key: Key2, mods: Alt, chars: "\x1b2" }
+  - { key: Key3, mods: Alt, chars: "\x1b3" }

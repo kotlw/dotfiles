@@ -5,7 +5,7 @@ PS1="%B%F{4}%~%f$%b "
 # History
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=~/.cache/zsh/history
+HISTFILE=$HOME/.cache/zsh/history
 setopt HIST_FCNTL_LOCK
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
@@ -69,13 +69,15 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt
 
 # Aliases
-alias rzs='source $HOME/.config/zsh/.zshrc'
+alias szs='source $HOME/.config/zsh/.zshrc'
+alias ozs='lvim $HOME/.config/zsh/.zshrc'
 alias ah='cat $HOME/.config/zsh/aliases.sh'
 alias ahg='cat $HOME/.config/zsh/aliases.sh | grep'
 alias cl='clear'
 alias lc='clear'
 
 alias nv='nvim'
+alias lv='lvim'
 
 alias ls='gls --color=always --group-directories-first'
 alias la='gls -A --color=always --group-directories-first'

@@ -12,7 +12,6 @@ declare -a REQUIRED_BIN=(
   "alacritty"
   "tmux"
   "nvim"
-  "randomq"
 )
 
 # Links description: "<source file path> = <destination file path>".
@@ -20,6 +19,8 @@ declare -a LINKS=(
   "alacritty/alacritty.yml = $HOME/.config/alacritty/alacritty.yml"
 
   "tmux/tmux.conf = $HOME/.config/tmux/tmux.conf"
+
+  "lvim/config.lua = $HOME/.config/lvim/config.lua"
 
   "zsh/.zprofile = $HOME/.zprofile"
   "zsh/.zshrc = $HOME/.config/zsh/.zshrc"
