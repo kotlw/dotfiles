@@ -5,15 +5,6 @@
 
 declare -r DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-# A warning will be shown if some of these binaries is missing.
-declare -a REQUIRED_BIN=(
-  "brew"
-  "git"
-  "alacritty"
-  "tmux"
-  "nvim"
-)
-
 # Links description: "<source file path> = <destination file path>".
 declare -a LINKS=(
   "alacritty/alacritty.yml = $HOME/.config/alacritty/alacritty.yml"
@@ -22,19 +13,13 @@ declare -a LINKS=(
 
   "lvim/config.lua = $HOME/.config/lvim/config.lua"
 
+  "hammerspoon = $HOME/.config/hammerspoon"
+
   "zsh/.zprofile = $HOME/.zprofile"
   "zsh/.zshrc = $HOME/.config/zsh/.zshrc"
 )
 
-function check_required_bins() {
-  for bin in "${REQUIRED_BIN[@]}"; do
-    if ! command -v "${bin}" &>/dev/null; then
-      echo -e "\033[0;33mWARNING: ${bin} is missing\033[0m"
-    fi
-  done
-}
-
-function link() {
+function main() {
   for line in "${LINKS[@]}"; do
     local src="${line% = *}"
     local abs_src="${DIR}/${line% = *}"
@@ -57,11 +42,6 @@ function link() {
     fi
 
   done
-}
-
-function main() {
-  check_required_bins 
-  link
 }
 
 main
