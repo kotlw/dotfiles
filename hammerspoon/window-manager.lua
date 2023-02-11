@@ -1,8 +1,7 @@
-local _M = {}
+local M = {}
 
-_M.gap = 10
-_M.resizeUnit = 10
-hs.window.animationDuration = _M.duration
+M.gap = 10
+hs.window.animationDuration = M.duration
 
 local function scaleRect(frame, units)
   return hs.geometry.rect(
@@ -15,47 +14,49 @@ end
 
 local function screenFrame()
   local s = hs.screen.mainScreen()
-  return scaleRect(s:frame(), -_M.gap)
+  return scaleRect(s:frame(), -M.gap)
 end
 
-local function scale(units)
+local function getSpaceID(position)
+  local spaces = hs.spaces.allSpaces()
+  _, IDs = pairs(spaces)(spaces)
+  return IDs[position]
+end
+
+function M.scale(units)
   local w = hs.window.focusedWindow()
   local wf = scaleRect(w:frame(), units)
   w:setFrame(wf:intersect(screenFrame()))
 end
 
-local function stick(side)
+function M.shift(place)
   local w = hs.window.focusedWindow()
   local sf = screenFrame()
 
-  if side == "left" then
-    sf.w = (sf.w / 2) - (_M.gap * 1.5)
-  elseif side == "right" then
-    sf.x = (sf.w / 2) + _M.gap / 2
-    sf.w = (sf.w / 2) + _M.gap / 2
+  if place == "left" then
+    sf.w = (sf.w / 2) - (M.gap * 1.5)
+  elseif place == "right" then
+    sf.x = (sf.w / 2) + M.gap / 2
+    sf.w = (sf.w / 2) + M.gap / 2
   end
 
   w:setFrame(sf)
 end
 
-function _M.maximize()
-  stick("full")
+function M.toggleFullScreen()
+  local w = hs.window.focusedWindow()
+  w:setFullScreen(not w:isFullScreen())
 end
 
-function _M.leftHalf()
-  stick("left")
+function M.moveToSpace(position)
+  local w = hs.window.focusedWindow()
+  hs.spaces.moveWindowToSpace(w, getSpaceID(position))
+  w:focus()
 end
 
-function _M.rightHalf()
-  stick("right")
+function M.createSpace()
+  local s = hs.screen.mainScreen()
+  hs.spaces.addSpaceToScreen(s)
 end
 
-function _M.incSize()
-  scale(_M.resizeUnit)
-end
-
-function _M.decSize()
-  scale(-_M.resizeUnit)
-end
-
-return _M
+return M
