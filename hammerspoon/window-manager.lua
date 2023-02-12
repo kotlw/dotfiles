@@ -1,7 +1,6 @@
 local M = {}
 
 M.gap = 10
-hs.window.animationDuration = M.duration
 
 local function scaleRect(frame, units)
   return hs.geometry.rect(
@@ -56,7 +55,13 @@ end
 
 function M.createSpace()
   local s = hs.screen.mainScreen()
-  hs.spaces.addSpaceToScreen(s)
+  hs.spaces.addSpaceToScreen(s, false)
+end
+
+function M.destroyLastSpace()
+  local spaces = hs.spaces.allSpaces()
+  _, IDs = pairs(spaces)(spaces)
+  hs.spaces.removeSpace(IDs[#IDs], false)
 end
 
 return M
