@@ -8,6 +8,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
 # apps paths
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 export GOPATH="$HOME/Dev/go"
 export PATH="$PATH:$GOPATH/bin"
 eval "$(/opt/homebrew/bin/brew shellenv)"

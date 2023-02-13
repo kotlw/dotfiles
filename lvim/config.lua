@@ -1,8 +1,8 @@
 -- Reference: https://github.com/LunarVim/LunarVim/blob/release-1.2/neovim-0.8/utils/installer/config.example.lua
 
 -- Vars
-local cmp = require("cmp")
-local Terminal  = require('toggleterm.terminal').Terminal
+local cmp      = require("cmp")
+local Terminal = require('toggleterm.terminal').Terminal
 
 
 -- General
@@ -62,10 +62,12 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.terminal.size = 5
+lvim.builtin.terminal.direction = "horizontal"
 LAZYGIT_TERMINAL = Terminal:new({
   cmd = "lazygit",
   direction = "float",
-  float_opts ={
+  float_opts = {
     border = "curved",
   },
 })
@@ -90,20 +92,17 @@ lvim.plugins = {
     config = function() require("Navigator").setup() end,
   },
   {
-    "marko-cerovac/material.nvim",
+    "catppuccin/nvim",
     config = function()
-      require("material").setup {
-        contrast = {
-          floating_windows = true,
-          cursor_line = true,
-        },
-        disable = {
-          background = false,
-        },
-        lualine_style = "default",
-      }
-      vim.g.material_style = "darker"
-      vim.cmd "colorscheme material"
-    end,
+      require("catppuccin").setup({
+        flavour = "macchiato",
+        transparent_background = true,
+      })
+      vim.cmd.colorscheme "catppuccin"
+    end
   },
+  {
+    "simrat39/rust-tools.nvim",
+    config = function() require("rust-tools").setup() end
+  }
 }
