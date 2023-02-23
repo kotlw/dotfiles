@@ -2,16 +2,20 @@ local M = {}
 
 M.gap = 10
 M.icons = {
-  Alacritty = " ",
-  Hammerspoon = "󰣪 ",
-  Firefox = "󰈹 ",
-  Telegram = " ",
-  Obsidian = "󰮊 ",
-  Calendar = " ",
-  Books = " ",
-  Preview = " ",
-  Finder = "󰀶 ",
-  Unknown = "󰘔 ",
+  ["Alacritty"] = " ",
+  ["Hammerspoon"] = "󰣪 ",
+  ["Firefox"] = "󰈹 ",
+  ["Safari"] = "󰀹 ",
+  ["Google Chrome"] = "󰊯 ",
+  ["Telegram"] = " ",
+  ["Obsidian"] = "󰮊 ",
+  ["Calendar"] = " ",
+  ["Books"] = " ",
+  ["Preview"] = " ",
+  ["Finder"] = "󰀶 ",
+  ["Bitwarden"] = " ",
+  ["Tor Browser"] = " ",
+  ["Unknown"] = "󰘔 ",
 }
 
 local menuBar = hs.menubar.new()
@@ -25,7 +29,7 @@ local function refreshMenuBar()
     local currentApp = w:application():name()
     local icon = M.icons[currentApp] or M.icons.Unknown
     local color = { red = 1, green = 1, blue = 1, alpha = currentApp == focusedApp and 1 or 0.4 }
-    title = title .. hs.styledtext.new(icon, { font = "FuraMono Nerd Font", color = color })
+    title = title .. hs.styledtext.new(icon, { font = {name = "FuraMono Nerd Font", size = 14}, color = color })
   end
 
   menuBar:setTitle(title)
