@@ -15,6 +15,10 @@ M.icons = {
   ["Finder"] = "󰀶 ",
   ["Bitwarden"] = " ",
   ["Tor Browser"] = " ",
+  ["Messages"] = "󰍡 ",
+  ["System Settings"] = " ",
+  ["Google Drive"] = " ",
+  ["Activity Monitor"] = "󰄪 ",
   ["Unknown"] = "󰘔 ",
 }
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#
-# Checks required dependencies. Creates symlinks.
-
+# Creates symlinks.
 
 declare -r DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
@@ -9,7 +7,7 @@ declare -r DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 declare -a LINKS=(
   "alacritty/alacritty.yml = $HOME/.config/alacritty/alacritty.yml"
 
-  "tmux/tmux.conf = $HOME/.config/tmux/tmux.conf"
+  "tmux = $HOME/.config/tmux"
 
   "lvim/config.lua = $HOME/.config/lvim/config.lua"
 
