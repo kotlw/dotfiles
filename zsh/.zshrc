@@ -71,8 +71,8 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt
 # Aliases
 alias szs='source $HOME/.config/zsh/.zshrc'
 alias ozs='lvim $HOME/.config/zsh/.zshrc'
-alias ah='cat $HOME/.config/zsh/aliases.sh'
-alias ahg='cat $HOME/.config/zsh/aliases.sh | grep'
+alias ah='cat $HOME/.config/zsh/.zshrc | grep alias'
+alias ahg='ah | grep'
 alias cl='clear'
 alias lc='clear'
 
