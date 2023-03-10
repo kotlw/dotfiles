@@ -1,0 +1,29 @@
+require("nvim-treesitter.configs").setup({
+  highlight = {
+    enable = true,
+    disable = { "markdown" },
+  },
+  indent = {
+    enable = true,
+    disable = { "python" },
+  },
+  ensure_installed = {
+    "bash",
+    "make",
+    "c",
+    "go",
+    "lua",
+    "python",
+    "markdown",
+    "latex",
+    "html",
+    "css",
+    "javascript",
+    "typescript",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "dockerfile",
+  },
+})
