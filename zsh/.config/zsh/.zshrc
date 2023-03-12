@@ -68,28 +68,10 @@ zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt
 
-# Aliases
-alias szs='source $HOME/.config/zsh/.zshrc'
-alias ozs='lvim $HOME/.config/zsh/.zshrc'
-alias ah='cat $HOME/.config/zsh/.zshrc | grep alias'
-alias ahg='ah | grep'
-alias cl='clear'
-alias lc='clear'
 
-alias nv='nvim'
-alias lv='lvim'
-
-alias ls='gls --color=always --group-directories-first'
-alias la='gls -A --color=always --group-directories-first'
-alias lg='gls -A --color=always --group-directories-first | grep'
-alias lsl='gls -XGlh --color=always --group-directories-first'
-alias lal='gls -AXGlh --color=always --group-directories-first'
-alias lgl='gls -AXGlh --color=always --group-directories-first | grep'
-
-alias dp='docker ps'
-alias dra='docker rm $(docker ps -aq)'
-alias dil='docker image ls'
-alias dira='docker image rm $(docker image ls -aq)'
+# Load aliases aliases
+[ -f "$HOME/.config/zsh/aliasrc" ] && source "$HOME/.config/zsh/aliasrc"
+[ -f "$LEDGER_HOME/aliasrc" ] && source "$LEDGER_HOME/aliasrc"
 
 # Load zsh-syntax-highlighting; should be last
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
