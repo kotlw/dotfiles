@@ -1,3 +1,6 @@
 [submodule "ledger/.ledger"]
 	path = ledger/.ledger
 	url = git@github.com:kotlw/ledger.git
+[submodule "task/.task"]
+	path = task/.task
+	url = git@github.com:kotlw/task.git
