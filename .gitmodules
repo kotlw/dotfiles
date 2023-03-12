@@ -4,3 +4,6 @@
 [submodule "task/.task"]
 	path = task/.task
 	url = git@github.com:kotlw/task.git
+[submodule "timewarrior/.timewarrior"]
+	path = timewarrior/.timewarrior
+	url = git@github.com:kotlw/timewarrior.git
