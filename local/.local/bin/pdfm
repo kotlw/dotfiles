@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if ! command -v exiftool &> /dev/null; then
+  echo "error: exiftool not found."
+  exit 1
+fi
+
+exiftool "$1"
+
+echo "Enter new Title:"
+read title
+echo "Enter new Author:"
+read author
+
+exiftool -Title="${title}" -Author="${author}" -Subject="PDF Metadata" "$1"
+
+mv "$1" "${title}.pdf"
+exiftool "${title}.pdf"
+

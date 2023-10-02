@@ -1,0 +1,30 @@
+#!/bin/bash
+
+_print_help() {
+  echo "Extended commands:"
+  echo "       tw tagrename <old tag> <new tag>"
+  echo ""
+  echo "Command aliases:"
+  echo "       tw w ... = tw week ..."
+}
+
+_tagrename() {
+  oldtag=$1; shift
+  newtag=$1; shift
+  idlist=$(timew summary 1970W01 - now "$oldtag" :ids |\
+    sed -nr 's/.* (@[0-9]+) .*/\1/p')
+
+  timew tag $idlist "$newtag"
+  timew untag $idlist "$oldtag"
+} 
+
+main() {
+  case "$1" in
+    tagrename) shift; _tagrename "$@" ;;
+    h | -h | help | --help) timew help | sed "s/timew/tw/g"; _print_help ;;
+    w) timew week "$@" ;;
+    *) timew "$@" ;;
+  esac
+}
+
+main "$@"

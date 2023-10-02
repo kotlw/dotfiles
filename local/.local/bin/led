@@ -1,0 +1,34 @@
+#!/bin/bash
+
+readonly main="${LEDGER_HOME}/main.txt"
+readonly meta="${LEDGER_HOME}/meta.txt"
+readonly prices="${LEDGER_HOME}/prices.txt"
+readonly journal="${LEDGER_HOME}/journal.txt"
+
+
+_ledger() {
+  ledger -f "${main}" --price-db "${prices}" --pedantic "$@"
+}
+
+_edit() {
+  case "$1" in
+    main) nvim "${main}" ;;
+    meta) nvim "${meta}" ;;
+    prices) nvim "${prices}" ;;
+    journal) nvim "${journal}" ;;
+    *) echo "Error: Unable to execute command.";;
+  esac
+}
+
+
+main() {
+  case "$1" in
+    edit) shift; _edit "$@" ;;
+    j) shift; _edit "journal" ;;
+    m) shift; _edit "meta" ;;
+    mt) _ledger -M -n reg Expenses ;;
+    *) _ledger "$@" ;;
+  esac
+}
+
+main "$@"
