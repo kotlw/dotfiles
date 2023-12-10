@@ -1,4 +1,5 @@
 readonly brew="/opt/homebrew/bin/brew"
+
 # zsh configuration
 export SHELL_SESSIONS_DISABLE=1
 export LS_COLORS="$LS_COLORS:di=0;34:ln=0;35:ex=0;31:"
@@ -13,6 +14,5 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export GOPATH="$HOME/.go"
 export PATH="$PATH:$GOPATH/bin"
-export TASKRC="$HOME/.task/.taskrc"
-export LEDGER_HOME="$HOME/.ledger"
+export PATH="$PATH:$HOME/fvm/default/bin"
 eval "$($brew shellenv)"

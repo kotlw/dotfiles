@@ -1,45 +1,50 @@
-local hotkey = require("hotkey")
-local app    = require("app")
-local layout = require("layout")
-local space  = require("space")
+local function bind(mods, binds)
+   for key, fn in pairs(binds) do
+    if fn then
+      hs.hotkey.bind(mods, tostring(key), fn, nil, fn)
+    end
+  end
+end
+
+local function launchOrFocusByBundleID(bundleID)
+  return function() hs.application.launchOrFocusByBundleID(bundleID) end
+end
+
+local function showAppBundleID()
+  hs.alert.show(hs.window.focusedWindow():application():bundleID())
+end
+
+local function toggleFullscreen()
+  local window = hs.window.focusedWindow()
+  window:setFullScreen(not window:isFullScreen())
+end
 
 -- Hammerspoon
-hotkey.bind({ "cmd", "alt", "ctrl" }, {
+bind({ "cmd", "alt", "ctrl" }, {
   ["R"] = hs.reload,
   ["C"] = hs.toggleConsole,
-  ["N"] = app.showAppName,
-  ["B"] = app.showAppBundleID,
+  ["B"] = showAppBundleID,
 })
 
 -- Application shortcuts
-hotkey.bind({ "alt" }, {
-  ["O"]      = app.launchOrFocusByBundleID("com.microsoft.Outlook"),
-  ["T"]      = app.launchOrFocusByBundleID("com.microsoft.teams2"),
-  ["K"]      = app.launchOrFocusByBundleID("com.skype.skype"),
-  ["J"]      = app.launchOrFocusByBundleID("net.cozic.joplin-desktop"),
-  ["W"]      = app.launchOrFocusByBundleID("com.bitwarden.desktop"),
-  ["\\"]     = app.launchOrFocusByBundleID("com.brave.Browser"),
-  ["tab"]    = app.launchOrFocusByBundleID("com.tdesktop.Telegram"),
-  ["return"] = app.launchOrFocusByBundleID("org.alacritty"),
+bind({ "ctrl", "alt" }, {
+  ["Z"]      = launchOrFocusByBundleID("us.zoom.xos"),
+  ["return"] = launchOrFocusByBundleID("org.alacritty"),
+  ["K"]      = launchOrFocusByBundleID("com.skype.skype"),
+  ["A"]      = launchOrFocusByBundleID("net.ankiweb.dtop"),
+  ["C"]      = launchOrFocusByBundleID("com.cockos.reaper"),
+  ["\\"]     = launchOrFocusByBundleID("com.brave.Browser"),
+  ["H"]      = launchOrFocusByBundleID("com.google.Chrome"),
+  ["T"]      = launchOrFocusByBundleID("com.microsoft.teams2"),
+  ["O"]      = launchOrFocusByBundleID("com.microsoft.Outlook"),
+  ["W"]      = launchOrFocusByBundleID("com.bitwarden.desktop"),
+  ["M"]      = launchOrFocusByBundleID("com.tdesktop.Telegram"),
+  ["R"]      = launchOrFocusByBundleID("com.microsoft.rdc.macos"),
+  ["J"]      = launchOrFocusByBundleID("net.cozic.joplin-desktop"),
+  ["G"]      = launchOrFocusByBundleID("com.arobas-music.guitarpro7"),
 })
 
 -- Window management
--- space.showMenuBar()
-space.icons = require("icons")
-hotkey.bind({ "ctrl", "alt" }, {
-  ["="]      = layout.larger,
-  ["-"]      = layout.smaller,
-  ["return"] = layout.maximize,
-  ["left"]   = layout.leftHalf,
-  ["right"]  = layout.rightHalf,
-  ["\\"]     = layout.toggleFullscreen,
-  ["1"]      = space.moveToSpace1,
-  ["2"]      = space.moveToSpace2,
-  ["3"]      = space.moveToSpace3,
-  ["4"]      = space.moveToSpace4,
-  ["5"]      = space.moveToSpace5,
-  -- ["Q"]      = space.focusPrev,
-  -- ["E"]      = space.focusNext,
-  ["`"]      = space.createSpace,
-  ["0"]      = space.destroyLastSpace,
+bind({ "alt", "shift" }, {
+  ["\\"] = toggleFullscreen,
 })
