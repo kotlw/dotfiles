@@ -1,6 +1,7 @@
 local m = vim.keymap.set
 local lsp = require("lspconfig")
 local rt = require("rust-tools")
+local null_ls = require("null-ls")
 
 -- UI Customization
 local cfg = { border = "rounded" }
@@ -39,6 +40,7 @@ lsp.pyright.setup({
   on_attach = on_attach,
 })
 
+
 lsp.lua_ls.setup({
   settings = {
     Lua = {
@@ -56,9 +58,21 @@ lsp.lua_ls.setup({
   on_attach = on_attach,
 })
 
-lsp.terraformls.setup {
+
+lsp.bashls.setup({
+  on_attach = on_attach,
+})
+
+
+lsp.gopls.setup {
   on_attach = on_attach,
 }
+
+
+lsp.tsserver.setup({
+  on_attach = on_attach,
+})
+
 
 rt.setup({
   server = {
@@ -69,16 +83,7 @@ rt.setup({
   },
 })
 
-lsp.gopls.setup{
-  on_attach = on_attach,
-}
 
-lsp.tsserver.setup({
-  on_attach = on_attach,
-})
-
-
-local null_ls = require("null-ls")
 null_ls.setup({
   on_attach = on_attach,
   sources = {

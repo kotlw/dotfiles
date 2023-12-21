@@ -8,8 +8,8 @@ m("n", "<space>oo", "o<esc>k")
 m("n", "<space>O", "O<esc>j")
 
 -- move selection up and down
-m("v", "J", "xp`[V`]")
-m("v", "K", "xkP`[V`]")
+m("v", "J", ":m '>+1<CR>gv=gv")
+m("v", "K", ":m '<-2<CR>gv=gv")
 
 -- do not exit visual mode after shifting
 m("v", "<", "<gv")

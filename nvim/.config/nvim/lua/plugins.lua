@@ -17,7 +17,7 @@ return {
     config = function() require("config/nvim-lspconfig") end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     config = function() require("config/null-ls") end,
   },
   {
