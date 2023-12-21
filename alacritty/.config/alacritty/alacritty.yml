@@ -1,5 +1,4 @@
-# Reference: https://github.com/alacritty/alacritty/blob/master/alacritty.yml
-
+# Reference: https://github.com/alacritty/alacritty/releases
 live_config_reload: true
 env:
   TERM: xterm-256color
@@ -21,11 +20,6 @@ window:
   decorations: buttonless
 
 shell:
-  # program: /bin/zsh
-  # args:
-  #   - -l
-  #   - -c
-  #   - zellij attach --index 0 || zellij -s main
   program: /opt/homebrew/bin/tmux
   args:
     - new-session

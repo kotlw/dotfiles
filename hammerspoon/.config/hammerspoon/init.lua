@@ -1,5 +1,5 @@
 local function bind(mods, binds)
-   for key, fn in pairs(binds) do
+  for key, fn in pairs(binds) do
     if fn then
       hs.hotkey.bind(mods, tostring(key), fn, nil, fn)
     end
@@ -20,7 +20,7 @@ local function toggleFullscreen()
 end
 
 -- Hammerspoon
-bind({ "cmd", "alt", "ctrl" }, {
+bind({ "alt", "ctrl", "cmd" }, {
   ["R"] = hs.reload,
   ["C"] = hs.toggleConsole,
   ["B"] = showAppBundleID,
