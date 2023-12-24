@@ -1,24 +1,29 @@
 #!/bin/bash
 
-alias ah='cat $HOME/.config/zsh/aliasrc'
-alias ahg='ah | grep'
+alias ah="cat $HOME/.config/zsh/aliasrc"
+alias ahg="ah | grep"
 
-alias szs='source $HOME/.config/zsh/.zshrc'
-alias cl='clear'
-alias lc='clear'
+alias szs="source $HOME/.config/zsh/.zshrc"
+alias cl="clear"
+alias lc="clear"
 
-alias nv='nvim'
+alias nv="nvim"
 
-alias ls='gls --color=always --group-directories-first'
-alias la='gls -A --color=always --group-directories-first'
-alias lg='gls -A --color=always --group-directories-first | grep'
-alias lsl='gls -XGlh --color=always --group-directories-first'
-alias lal='gls -AXGlh --color=always --group-directories-first'
-alias lgl='gls -AXGlh --color=always --group-directories-first | grep'
+alias ls="gls --color=always --group-directories-first"
+alias la="gls -A --color=always --group-directories-first"
+alias lg="gls -A --color=always --group-directories-first | grep"
+alias lsl="gls -XGlh --color=always --group-directories-first"
+alias lal="gls -AXGlh --color=always --group-directories-first"
+alias lgl="gls -AXGlh --color=always --group-directories-first | grep"
 
-alias dp='docker ps'
-alias dra='docker rm $(docker ps -aq)'
-alias dil='docker image ls'
-alias dira='docker image rm $(docker image ls -aq)'
+alias dp="docker ps"
+alias dra="docker rm $(docker ps -aq)"
+alias dil="docker image ls"
+alias dira="docker image rm $(docker image ls -aq)"
 
-alias venva 'source ./venv/bin/activate'
+alias venva "source ./venv/bin/activate"
+
+alias hl="hledger"
+alias hlj="nvim $HOME/.local/var/hledger/2023.journal"
+alias hla="nvim $HOME/.local/var/hledger/2023accounts.journal"
+alias hlp="nvim $HOME/.local/var/hledger/2023prices.journal"
