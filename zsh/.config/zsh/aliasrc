@@ -8,6 +8,7 @@ alias cl="clear"
 alias lc="clear"
 
 alias nv="nvim"
+alias nb="newsboat -r"
 
 alias ls="gls --color=always --group-directories-first"
 alias la="gls -A --color=always --group-directories-first"
@@ -24,6 +25,8 @@ alias dira="docker image rm $(docker image ls -aq)"
 alias venva "source ./venv/bin/activate"
 
 alias hl="hledger"
-alias hlj="nvim $HOME/.local/var/hledger/2023.journal"
-alias hla="nvim $HOME/.local/var/hledger/2023accounts.journal"
-alias hlp="nvim $HOME/.local/var/hledger/2023prices.journal"
+alias hlj="nvim $HOME/.local/var/hledger/2024/2024.journal"
+alias hla="nvim $HOME/.local/var/hledger/2024/2024.accounts"
+alias hlp="nvim $HOME/.local/var/hledger/2024/2024.prices"
+
+alias qlp="qlmanage -p"

@@ -33,7 +33,7 @@ bind({ "ctrl", "alt" }, {
   ["K"]      = launchOrFocusByBundleID("com.skype.skype"),
   ["A"]      = launchOrFocusByBundleID("net.ankiweb.dtop"),
   ["C"]      = launchOrFocusByBundleID("com.cockos.reaper"),
-  ["\\"]     = launchOrFocusByBundleID("com.brave.Browser"),
+  ["B"]      = launchOrFocusByBundleID("com.brave.Browser"),
   ["H"]      = launchOrFocusByBundleID("com.google.Chrome"),
   ["T"]      = launchOrFocusByBundleID("com.microsoft.teams2"),
   ["O"]      = launchOrFocusByBundleID("com.microsoft.Outlook"),

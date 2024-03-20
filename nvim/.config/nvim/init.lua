@@ -26,10 +26,13 @@ require("lazy").setup({
   { "nvim-telescope/telescope.nvim", tag = "0.1.5" },
   { "lewis6991/gitsigns.nvim",       config = true },
   { "ThePrimeagen/harpoon",          branch = "harpoon2" },
+  { "echasnovski/mini.surround",     config = true,      version = "*" },
+  { "echasnovski/mini.comment",      config = true,      version = "*" },
   {
     "nvim-treesitter/nvim-treesitter",
     run = ":tsupdate",
     opts = {
+      parser_install_dir = "~/.local/share/nvim/lazy/nvim-treesitter/parser/",
       ensure_installed = {
         "bash", "make", "go", "lua", "python", "markdown", "html",
         "css", "json", "yaml", "toml", "dockerfile", "rust",
@@ -85,12 +88,15 @@ vim.keymap.set("n", "<c-s>", function() harpoon:list():select(4) end)
 
 
 local telescope = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fg", function() telescope.live_grep({hidden = true}) end)
-vim.keymap.set("n", "<leader>ff", function() telescope.find_files({hidden = true}) end)
+vim.keymap.set("n", "<leader>fg", function() telescope.live_grep({ hidden = true }) end)
+vim.keymap.set("n", "<leader>ff", function() telescope.find_files({ hidden = true }) end)
+vim.keymap.set("n", "<leader>fb", function() telescope.buffers({ hidden = true }) end)
 
 
 local lspconfig = require("lspconfig")
 lspconfig.pyright.setup({})
+lspconfig.rust_analyzer.setup({})
+lspconfig.gopls.setup({})
 lspconfig.lua_ls.setup({
   settings = {
     Lua = {
