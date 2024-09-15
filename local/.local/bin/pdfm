@@ -9,7 +9,7 @@ read title
 echo "Enter new Author:"
 read author
 
-exiftool -Title="${title}" -Author="${author}" -Subject="PDF Metadata" "$1"
+exiftool -Title="${title}" -Author="${author}" -Creator="VK" -Subject="PDF Metadata" "$1"
 
 mv "$1" "${title}.pdf"
 exiftool "${title}.pdf"

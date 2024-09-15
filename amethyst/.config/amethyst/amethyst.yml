@@ -1,9 +1,0 @@
-# reference: https://github.com/ianyh/Amethyst/blob/development/.amethyst.sample.yml
-layouts:
-  - fullscreen
-  - tall
-  - floating
-
-floating: 
-  - "com.apple.finder"
-  - "com.apple.systempreferences"

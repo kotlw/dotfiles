@@ -21,12 +21,3 @@ alias dp="docker ps"
 alias dra="docker rm $(docker ps -aq)"
 alias dil="docker image ls"
 alias dira="docker image rm $(docker image ls -aq)"
-
-alias venva "source ./venv/bin/activate"
-
-alias hl="hledger"
-alias hlj="nvim $HOME/.local/var/hledger/2024/2024.journal"
-alias hla="nvim $HOME/.local/var/hledger/2024/2024.accounts"
-alias hlp="nvim $HOME/.local/var/hledger/2024/2024.prices"
-
-alias qlp="qlmanage -p"

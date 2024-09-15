@@ -132,4 +132,3 @@ program = "/opt/homebrew/bin/tmux"
 [window]
 decorations = "buttonless"
 opacity = 0.9
-

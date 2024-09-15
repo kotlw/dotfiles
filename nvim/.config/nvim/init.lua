@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { "nvim-lua/plenary.nvim" },
   { "neovim/nvim-lspconfig" },
+  { "nvimtools/none-ls.nvim" },
   { "L3MON4D3/LuaSnip" },
   { "hrsh7th/nvim-cmp" },
   { "hrsh7th/cmp-path" },
@@ -79,7 +80,7 @@ vim.keymap.set("n", "<leader>h", vim.cmd.nohlsearch) -- clear highlight
 
 
 local harpoon = require("harpoon")
-vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 vim.keymap.set("n", "<c-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 vim.keymap.set("n", "<c-h>", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<c-t>", function() harpoon:list():select(2) end)
@@ -92,6 +93,14 @@ vim.keymap.set("n", "<leader>fg", function() telescope.live_grep({ hidden = true
 vim.keymap.set("n", "<leader>ff", function() telescope.find_files({ hidden = true }) end)
 vim.keymap.set("n", "<leader>fb", function() telescope.buffers({ hidden = true }) end)
 
+local null_ls = require("null-ls")
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.pylint,
+    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.black,
+  },
+})
 
 local lspconfig = require("lspconfig")
 lspconfig.pyright.setup({})
