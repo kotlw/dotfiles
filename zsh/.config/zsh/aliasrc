@@ -18,6 +18,6 @@ alias lal="gls -AXGlh --color=always --group-directories-first"
 alias lgl="gls -AXGlh --color=always --group-directories-first | grep"
 
 alias dp="docker ps"
-alias dra="docker rm $(docker ps -aq)"
+# alias dra="docker rm $(docker ps -aq)"
 alias dil="docker image ls"
-alias dira="docker image rm $(docker image ls -aq)"
+# alias dira="docker image rm $(docker image ls -aq)"

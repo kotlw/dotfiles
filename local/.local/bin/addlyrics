@@ -1,0 +1,13 @@
+#!/bin/bash
+band=$(basename $(dirname "$PWD"))
+echo $band
+
+for f in *; do
+  filename=$f
+  echo "$filename"
+  songname=${f:3}
+  songname=${songname%.*}
+  search_query="$band - $songname"
+  result_name="${filename%.*}.lrc"
+  syncedlyrics "$search_query" -o "$result_name"
+done

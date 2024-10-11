@@ -36,7 +36,7 @@ require("lazy").setup({
       parser_install_dir = "~/.local/share/nvim/lazy/nvim-treesitter/parser/",
       ensure_installed = {
         "bash", "make", "go", "lua", "python", "markdown", "html",
-        "css", "json", "yaml", "toml", "dockerfile", "rust",
+        "css", "json", "yaml", "toml", "dockerfile", "rust", "org",
       },
     }
   },
