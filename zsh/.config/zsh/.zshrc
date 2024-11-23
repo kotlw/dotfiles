@@ -75,6 +75,7 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt
 
 # yazi
 function y() {
+  export CLICOLOR_FORCE=1
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
