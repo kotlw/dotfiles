@@ -27,6 +27,7 @@ require("lazy").setup({
   { "lewis6991/gitsigns.nvim", config = true },
 })
 
+vim.opt.path:append("**")
 vim.cmd.colorscheme("slate")
 
 vim.o.number         = true
@@ -65,18 +66,14 @@ null_ls.setup({
 
 local lspconfig = require("lspconfig")
 lspconfig.jedi_language_server.setup {}
-lspconfig.rust_analyzer.setup {}
-lspconfig.gopls.setup {}
 lspconfig.lua_ls.setup {
   settings = {
     Lua = {
-      runtime = {
-        version = "LuaJIT" },
       diagnostics = {
-        globals = { "vim", "hs" }
-      },
-    },
-  },
+        globals = { "vim" }
+      }
+    }
+  }
 }
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
@@ -96,29 +93,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set("n", "<leader>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
+    vim.keymap.set("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<leader>f", function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+    vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
   end,
 })
 
+vim.diagnostic.config { underline = true, signs = false }
+
 
 local cmp = require("cmp")
-
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
   }),
   sources = cmp.config.sources({
     { name = "nvim_lua" },
