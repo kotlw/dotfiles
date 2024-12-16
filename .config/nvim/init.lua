@@ -1,30 +1,13 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 
 require("lazy").setup({
-  { "nvim-lua/plenary.nvim" },
-  { "neovim/nvim-lspconfig" },
-  { "nvimtools/none-ls.nvim" },
-  { "hrsh7th/nvim-cmp" },
-  { "hrsh7th/cmp-path" },
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-cmdline" },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-nvim-lua" },
-  { "lewis6991/gitsigns.nvim", config = true },
+  spec = {
+    { "nvim-lua/plenary.nvim" },
+    { "neovim/nvim-lspconfig" },
+    { "nvimtools/none-ls.nvim" },
+    { 'echasnovski/mini.completion', version = false, config = true },
+    { 'echasnovski/mini.diff',       version = false, config = true },
+  },
 })
 
 vim.opt.path:append("**")
@@ -53,14 +36,22 @@ vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv")         -- move selection up and do
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv")         -- move selection up and down
 vim.keymap.set("n", "<leader>h", vim.cmd.nohlsearch) -- clear highlight
 
+vim.keymap.set("n", "<leader>g", ":lua MiniDiff.toggle_overlay()<cr>")
+
 
 local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy,
-    null_ls.builtins.diagnostics.pylint,
-    null_ls.builtins.formatting.isort,
-    null_ls.builtins.formatting.black,
+    null_ls.builtins.diagnostics.pylint.with({
+      extra_agrs = { "--disable=C0111", "--max-line-length=120" }
+    }),
+    null_ls.builtins.formatting.isort.with({
+      extra_agrs = { "--profile", "black", "--line-length", "120" }
+    }),
+    null_ls.builtins.formatting.black.with({
+      extra_agrs = { "--line-length=120" }
+    }),
   },
 })
 
@@ -100,39 +91,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
   end,
-})
-
-vim.diagnostic.config { underline = true, signs = false }
-
-
-local cmp = require("cmp")
-cmp.setup({
-  mapping = cmp.mapping.preset.insert({
-    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = "nvim_lua" },
-    { name = "nvim_lsp" },
-    { name = "path" },
-    { name = "buffer" },
-  })
-})
-
-cmp.setup.cmdline({ "/", "?" }, {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "buffer" }
-  }
-})
-
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = "path" },
-    { name = "cmdline" }
-  })
 })
