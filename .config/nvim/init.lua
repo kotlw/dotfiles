@@ -44,13 +44,13 @@ null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy,
     null_ls.builtins.diagnostics.pylint.with({
-      extra_agrs = { "--disable=C0111", "--max-line-length=120" }
+      extra_args = { "--disable=C0111", "--max-line-length=120" }
     }),
     null_ls.builtins.formatting.isort.with({
-      extra_agrs = { "--profile", "black", "--line-length", "120" }
+      extra_args = { "--profile", "black", "--line-length", "120" }
     }),
     null_ls.builtins.formatting.black.with({
-      extra_agrs = { "--line-length=120" }
+      extra_args = { "-l", "120" }
     }),
   },
 })
