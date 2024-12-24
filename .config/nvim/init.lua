@@ -7,11 +7,18 @@ require("lazy").setup({
     { "nvimtools/none-ls.nvim" },
     { 'echasnovski/mini.completion', version = false, config = true },
     { 'echasnovski/mini.diff',       version = false, config = true },
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      opts = {
+        flavour = "macchiato",
+      },
+    },
   },
 })
 
 vim.opt.path:append("**")
-vim.cmd.colorscheme("slate")
+vim.cmd.colorscheme("catppuccin")
 
 vim.o.number         = true
 vim.o.tabstop        = 2
@@ -56,6 +63,7 @@ null_ls.setup({
 })
 
 local lspconfig = require("lspconfig")
+lspconfig.rust_analyzer.setup {}
 lspconfig.jedi_language_server.setup {}
 lspconfig.lua_ls.setup {
   settings = {
@@ -92,3 +100,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format { async = true } end, opts)
   end,
 })
+
+-- workaround for rust_analyzer: -32802: server cancelled the request
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then
+      return
+    end
+    return default_diagnostic_handler(err, result, context, config)
+  end
+end
