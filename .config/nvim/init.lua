@@ -41,6 +41,7 @@ vim.keymap.set("n", "<leader>O", "O<esc>j")          -- insert new line abowe
 vim.keymap.set("n", "<leader>oo", "o<esc>k")         -- insert new line below
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv")         -- move selection up and down
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv")         -- move selection up and down
+vim.keymap.set("n", "<leader>pe", vim.cmd.Ex)        -- open explorer
 vim.keymap.set("n", "<leader>h", vim.cmd.nohlsearch) -- clear highlight
 
 vim.keymap.set("n", "<leader>g", ":lua MiniDiff.toggle_overlay()<cr>")
@@ -50,19 +51,11 @@ local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.mypy,
-    null_ls.builtins.diagnostics.pylint.with({
-      extra_args = { "--disable=C0111", "--max-line-length=120" }
-    }),
-    null_ls.builtins.formatting.isort.with({
-      extra_args = { "--profile", "black", "--line-length", "120" }
-    }),
-    null_ls.builtins.formatting.black.with({
-      extra_args = { "-l", "120" }
-    }),
   },
 })
 
 local lspconfig = require("lspconfig")
+lspconfig.ruff.setup {}
 lspconfig.rust_analyzer.setup {}
 lspconfig.jedi_language_server.setup {}
 lspconfig.lua_ls.setup {
