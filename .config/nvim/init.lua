@@ -5,14 +5,20 @@ require("lazy").setup({
     { "nvim-lua/plenary.nvim" },
     { "neovim/nvim-lspconfig" },
     { "nvimtools/none-ls.nvim" },
-    { 'echasnovski/mini.completion', version = false, config = true },
-    { 'echasnovski/mini.diff',       version = false, config = true },
+    { "nvim-telescope/telescope.nvim", tag = "0.1.8" },
+    { "catppuccin/nvim",               name = "catppuccin", opts = { flavour = "macchiato", } },
+    { "ThePrimeagen/harpoon",          branch = "harpoon2", config = true },
+    { "echasnovski/mini.completion",   version = false,     config = true },
+    { "echasnovski/mini.diff",         version = false,     config = true },
     {
-      "catppuccin/nvim",
-      name = "catppuccin",
-      opts = {
-        flavour = "macchiato",
-      },
+      "nvim-treesitter/nvim-treesitter",
+      build = ":TSUpdate",
+      config = function()
+        require("nvim-treesitter.configs").setup {
+          highlight = { enable = true },
+          indent = { enable = true }
+        }
+      end
     },
   },
 })
@@ -44,8 +50,25 @@ vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv")         -- move selection up and do
 vim.keymap.set("n", "<leader>pe", vim.cmd.Ex)        -- open explorer
 vim.keymap.set("n", "<leader>h", vim.cmd.nohlsearch) -- clear highlight
 
+vim.keymap.set("n", "<leader>bn", vim.cmd.bnext)
+vim.keymap.set("n", "<leader>bp", vim.cmd.bprevious)
+vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete)
+
 vim.keymap.set("n", "<leader>g", ":lua MiniDiff.toggle_overlay()<cr>")
 
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+local harpoon = require('harpoon')
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 
 local null_ls = require("null-ls")
 null_ls.setup({
