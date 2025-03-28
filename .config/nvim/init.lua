@@ -6,7 +6,7 @@ require("lazy").setup({
     { "neovim/nvim-lspconfig" },
     { "nvimtools/none-ls.nvim" },
     { "nvim-telescope/telescope.nvim", tag = "0.1.8" },
-    { "catppuccin/nvim",               name = "catppuccin", opts = { flavour = "macchiato", } },
+    { "catppuccin/nvim",               name = "catppuccin", opts = { flavour = "macchiato", transparent_background = true } },
     { "ThePrimeagen/harpoon",          branch = "harpoon2", config = true },
     { "echasnovski/mini.completion",   version = false,     config = true },
     { "echasnovski/mini.diff",         version = false,     config = true },
