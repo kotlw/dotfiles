@@ -4,27 +4,26 @@ require("lazy").setup({
   spec = {
     { "nvim-lua/plenary.nvim" },
     { "neovim/nvim-lspconfig" },
-    { "nvimtools/none-ls.nvim" },
     { "nvim-telescope/telescope.nvim", tag = "0.1.8" },
-    { "catppuccin/nvim",               name = "catppuccin", opts = { flavour = "macchiato", transparent_background = true } },
-    { "ThePrimeagen/harpoon",          branch = "harpoon2", config = true },
-    { "echasnovski/mini.completion",   version = false,     config = true },
-    { "echasnovski/mini.diff",         version = false,     config = true },
+    { "folke/tokyonight.nvim",         opts = { transparent = true } },
+    { "ThePrimeagen/harpoon",          branch = "harpoon2",          config = true },
+    { "echasnovski/mini.diff",         version = false,              config = true },
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-path" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-cmdline" },
+    { "hrsh7th/cmp-nvim-lsp" },
     {
       "nvim-treesitter/nvim-treesitter",
       build = ":TSUpdate",
-      config = function()
-        require("nvim-treesitter.configs").setup {
-          highlight = { enable = true },
-          indent = { enable = true }
-        }
-      end
+      config = function() require("nvim-treesitter.configs").setup { highlight = { enable = true } } end
     },
   },
 })
 
+
 vim.opt.path:append("**")
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("tokyonight")
 
 vim.o.number         = true
 vim.o.tabstop        = 2
@@ -61,6 +60,7 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+vim.keymap.set('n', '<leader>fq', builtin.quickfix, { desc = 'Telescope help tags' })
 
 local harpoon = require('harpoon')
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
@@ -70,18 +70,10 @@ vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 
-local null_ls = require("null-ls")
-null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.mypy,
-  },
-})
-
-local lspconfig = require("lspconfig")
-lspconfig.ruff.setup {}
-lspconfig.rust_analyzer.setup {}
-lspconfig.jedi_language_server.setup {}
-lspconfig.lua_ls.setup {
+vim.lsp.enable("pyright")
+vim.lsp.enable("ruff")
+vim.lsp.enable("lua_ls")
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {
@@ -89,7 +81,7 @@ lspconfig.lua_ls.setup {
       }
     }
   }
-}
+})
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
@@ -101,14 +93,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
     local opts = { buffer = ev.buf }
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-    vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set("n", "<leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -117,13 +104,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- workaround for rust_analyzer: -32802: server cancelled the request
-for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
-  local default_diagnostic_handler = vim.lsp.handlers[method]
-  vim.lsp.handlers[method] = function(err, result, context, config)
-    if err ~= nil and err.code == -32802 then
-      return
-    end
-    return default_diagnostic_handler(err, result, context, config)
-  end
-end
+local cmp = require("cmp")
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lua" },
+    { name = "nvim_lsp" },
+    { name = "path" },
+    { name = "buffer" },
+  })
+})
+
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" }
+  }
+})
+
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = "path" },
+    { name = "cmdline" }
+  })
+})

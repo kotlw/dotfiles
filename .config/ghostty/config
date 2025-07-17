@@ -1,10 +1,10 @@
 macos-titlebar-style = "hidden"
 
-theme = "catppuccin-macchiato"
-background-opacity = 0.95
+theme = "tokyonight"
+background-opacity = 0.90
 
 font-size = 14
-font-family = "FiraMono Nerd Font"
+font-family = "JetBrainsMono Nerd Font"
 font-style-bold = "Medium"
 font-style-bold-italic = "Medium Italic"
 font-thicken = true
