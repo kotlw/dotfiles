@@ -1,7 +1,7 @@
 macos-titlebar-style = "hidden"
 
-theme = "tokyonight"
-background-opacity = 0.90
+theme = "light:tokyonight-day,dark:tokyonight"
+background-opacity = 1
 
 font-size = 14
 font-family = "JetBrainsMono Nerd Font"

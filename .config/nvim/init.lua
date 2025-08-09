@@ -4,6 +4,7 @@ require("lazy").setup({
   spec = {
     { "nvim-lua/plenary.nvim" },
     { "neovim/nvim-lspconfig" },
+    { "f-person/auto-dark-mode.nvim",  opts = {} },
     { "nvim-telescope/telescope.nvim", tag = "0.1.8" },
     { "folke/tokyonight.nvim",         opts = { transparent = true } },
     { "ThePrimeagen/harpoon",          branch = "harpoon2",          config = true },
@@ -70,8 +71,12 @@ vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
 
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("eslint")
+
 vim.lsp.enable("pyright")
 vim.lsp.enable("ruff")
+
 vim.lsp.enable("lua_ls")
 vim.lsp.config("lua_ls", {
   settings = {

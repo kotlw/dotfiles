@@ -8,3 +8,4 @@ bindkey "^P" reverse-menu-complete
 alias ls="gls --color=always --group-directories-first"
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source .scripts.sh
